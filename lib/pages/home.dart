@@ -1,29 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/pages/tabs/home_screen.dart';
-import 'package:instagram_clone/pages/tabs/profile_screen.dart';
+import 'package:instagram_clone/pages/tabs/search_screen.dart';
+import 'package:instagram_clone/pages/tabs/user_profile_screen.dart';
+import 'package:instagram_clone/services/functions/databaseFunctions.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({
+    super.key,
+  });
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    findUsername();
+  }
+
+  findUsername() async {
+    final username = await getUserName();
+    setState(() {
+      userName = username;
+    });
+  }
+
+  late String userName;
   int currentIndex = 0;
-  List selectedPage = [
-    const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
-    const ProfileScreen(),
-  ];
+  selectedpage(index) {
+    switch (index) {
+      case 0:
+        return const HomeScreen();
+
+      case 1:
+        return const SearchScreen();
+
+      case 2:
+        return const HomeScreen();
+
+      case 3:
+        return const HomeScreen();
+
+      case 4:
+        return UserProfileScreen(
+          username: userName,
+        );
+      default:
+        return const HomeScreen();
+    }
+  }
+
+  // List selectedPage = [
+  //   const HomeScreen(),
+  //   const HomeScreen(),
+  //   const HomeScreen(),
+  //   const HomeScreen(),
+  //   ProfileScreen(
+  //     username: widget.userName,
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: selectedPage[currentIndex],
+      body: selectedpage(currentIndex),
       bottomNavigationBar: Theme(
         data: ThemeData(splashFactory: NoSplash.splashFactory),
         child: NavigationBar(

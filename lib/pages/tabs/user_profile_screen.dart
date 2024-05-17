@@ -1,11 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/auth/login_screen.dart';
 import 'package:instagram_clone/utils/customfontstyle.dart';
 import 'package:instagram_clone/widgets/features/post_tabbar_view.dart';
 import 'package:instagram_clone/widgets/features/reels_tabbar_view.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class UserProfileScreen extends StatefulWidget {
+  const UserProfileScreen({
+    super.key,
+    required this.username,
+  });
+  final String username;
 
+  @override
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
+}
+
+class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -16,15 +27,23 @@ class ProfileScreen extends StatelessWidget {
           surfaceTintColor: Colors.white,
           backgroundColor: Colors.white,
           title: Text(
-            "bhupender.5911",
+            widget.username,
             style: CustomFontStyle.boldText.copyWith(),
           ),
           actions: [
-            Image.asset(
-              "assets/icons/ic_square-plus.png",
-              height: 25,
+            IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                    (route) => false);
+              },
+              icon: const Icon(Icons.logout),
             ),
-            const SizedBox(width: 20),
+            const SizedBox(width: 10),
             Image.asset(
               "assets/icons/ic_more_burger.png",
               height: 25,
@@ -69,7 +88,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
@@ -146,7 +165,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height,
-                child: TabBarView(children: [
+                child: const TabBarView(children: [
                   PostTabBarView(),
                   ReelsTabBarView(),
                   PostTabBarView(),

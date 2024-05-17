@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/pages/others/chats_screen.dart';
 import 'package:instagram_clone/utils/customfontstyle.dart';
 import 'package:instagram_clone/widgets/features/home_screen_post.dart';
 import 'package:instagram_clone/widgets/features/stories_listbar.dart';
@@ -29,7 +30,13 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChatsScreen(),
+                  ));
+            },
             icon: Image.asset(
               "assets/icons/ic_chat.png",
               height: 25,

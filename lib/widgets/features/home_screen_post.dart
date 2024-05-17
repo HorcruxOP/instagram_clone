@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/pages/others/profile_screen.dart';
+import 'package:instagram_clone/utils/customfontstyle.dart';
 
 class HomeScreenPost extends StatefulWidget {
   const HomeScreenPost({super.key});
@@ -27,17 +29,36 @@ class _HomeScreenPostState extends State<HomeScreenPost> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 20,
                         backgroundImage: NetworkImage(
                           "https://cdn-icons-png.flaticon.com/512/1253/1253756.png",
                         ),
                         backgroundColor: Colors.black,
                       ),
-                      SizedBox(width: 10),
-                      Text("name")
+                      const SizedBox(width: 10),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProfileScreen(
+                                  name: "name",
+                                  userName: "name",
+                                  imageUrl: "name",
+                                ),
+                              ));
+                        },
+                        child: Text(
+                          "name",
+                          style: CustomFontStyle.mediumText.copyWith(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   IconButton(
